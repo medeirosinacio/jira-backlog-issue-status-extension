@@ -1,28 +1,29 @@
 {
-    // Comments are accepted in the manifest, even though it is JSON.
-    "manifest_version": 3,
-    "name": "Chrome Extension v3 Starter",
-    "description": "A minimal example of a chrome extension using manifest v3",
-    "version": "0.0.1",
-    "icons": {
-        "16": "logo/logo-16.png",
-        "48": "logo/logo-48.png",
-        "128": "logo/logo-128.png"
-    },
-    "options_page": "settings/settings.html",
-    "action": {
-        "default_title": "Chrome Addon v3 Starter",
-        "default_popup": "popup/popup.html"
-    },
-    "permissions": [],
-    "host_permissions": [
-        "*://*/*"
-    ],
-    "background": {
-        "service_worker": "service-worker.js"
-    },
-    "content_scripts": [{
-        "js": ["foreground.js"],
-        "matches": ["https://github.com/*"]
-    }]
+  "manifest_version": 3,
+  "name": "Extension Name",
+  "description": "Some Desc.",
+  "version": "1.1",
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.atlassian.net/jira/software/c/projects/*/boards/*/backlog?*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "contentscript.js",
+        "inject.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "injected.js"
+      ],
+      "matches": [
+        "https://*.atlassian.net/*"
+      ],
+      "use_dynamic_url": true
+    }
+  ]
 }
