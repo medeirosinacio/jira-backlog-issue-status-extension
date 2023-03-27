@@ -6,7 +6,7 @@
   "content_scripts": [
     {
       "matches": [
-        "https://*.atlassian.net/jira/software/c/projects/*/boards/*/backlog?*"
+        "https://*.atlassian.net/*"
       ],
       "run_at": "document_start",
       "js": [

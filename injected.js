@@ -1,33 +1,16 @@
 /**
+ * Função que obtém o ID do board.
+ */
+function getRapidViewId() {
+    return new URL(window.location.href).pathname.split('/').slice(-2, -1)[0];
+}
+
+/**
  * Realiza um log com a mensagem informada.
  * @param {string} message Mensagem que será logada.
  */
-function log(message = '') {
+function debug(message = '') {
     console.log(message);
-}
-
-log('URL matched');
-log('Script initiated...');
-
-/**
- * Cria um elemento com o status da issue após ela ser visível na tela.
- * @param {Object} issue Objeto que representa a issue.
- */
-async function createElementStatusAfterVisibleOnScreen(issue) {
-    log(`createElementStatusAfterVisibleOnScreen ${issue.key}`);
-    log(issue);
-
-    const selector = `[data-issue-key="${issue.key}"] .ghx-row.ghx-end.ghx-items-container`;
-    const element = await waitForElement(selector);
-
-    if (element.querySelector('.ghx-issue-status')) {
-        element.removeChild(element.querySelector('.ghx-issue-status'));
-    }
-
-    const statusElement = document.createElement('span');
-    statusElement.classList.add('ghx-issue-status');
-    statusElement.textContent = issue.statusName;
-    element.insertAdjacentElement('afterbegin', statusElement);
 }
 
 /**
@@ -46,49 +29,98 @@ function waitForElement(selector, timeout = 5000) {
                 resolve(element);
             } else if (Date.now() - startTime >= timeout) {
                 clearInterval(checkInterval);
-                reject(new Error(`Timeout waiting for element ${selector}`));
+                console.log(`Timeout waiting for element ${selector}`);
             }
         }, 100);
     });
 }
 
+/**
+ * Função que obtém as issues da board.
+ * @returns {Promise<Object>} Promise que resolve com o JSON das issues ou rejeita em caso de erro.
+ */
+async function getIssuesFromBoard() {
+    try {
+        const urlbase = '/rest/greenhopper/1.0/xboard/plan/v2/backlog/data?rapidViewId={rapidViewId}&forceConsistency=true';
+        const urlIssues = urlbase.replace('{rapidViewId}', getRapidViewId());
+        debug(urlIssues);
+        const response = await fetch(urlIssues);
+        return response.json();
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+/**
+ * Função que cria um elemento com o status da issue após ela ser visível na tela.
+ * @param {Object} issue Objeto que representa a issue.
+ */
+async function createElementStatusAfterVisibleOnScreen(issue) {
+    try {
+        debug(`createElementStatusAfterVisibleOnScreen ${issue.key}`);
+        debug(issue);
+        const selector = `[data-issue-key="${issue.key}"] .ghx-row.ghx-end.ghx-items-container`;
+        const element = await waitForElement(selector);
+        if (element.querySelector('.ghx-issue-status')) {
+            element.removeChild(element.querySelector('.ghx-issue-status'));
+        }
+        const statusElement = document.createElement('span');
+        statusElement.classList.add('ghx-issue-status');
+        statusElement.textContent = issue.statusName;
+        element.insertAdjacentElement('afterbegin', statusElement);
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+/**
+ * Função que configura o XMLHttpRequest.
+ */
 (function (xhr) {
-    log('Configure XMLHttpRequest');
+    debug('Configure XMLHttpRequest');
 
     const XHR = XMLHttpRequest.prototype;
     const open = XHR.open;
     const send = XHR.send;
 
     XHR.open = function (method, url) {
-        log('XMLHttpRequest open');
+        debug('XMLHttpRequest open');
         return open.apply(this, arguments);
     };
 
     XHR.send = function (postData) {
-        log('XMLHttpRequest send');
+        debug('XMLHttpRequest send');
 
         const self = this;
         self.addEventListener('load', async function () {
-            log('XMLHttpRequest eventListener load');
-            log(self);
+            debug('XMLHttpRequest eventListener load');
+            debug(self);
 
-            const response = JSON.parse(self.responseText);
-
-            if (response && response.hasOwnProperty('issues')) {
-                const issues = response.issues;
-
-                log('XMLHttpRequest has issues');
-                log(issues);
-
-                // Aguarda cada elemento estar visível na tela antes de criar o status.
-                for (const issue of issues) {
-                    try {
-                        createElementStatusAfterVisibleOnScreen(issue);
-                    } catch (error) {
-                        log(error.message);
-                    }
-                }
+            if (self.responseURL.indexOf('storeMode?mode=plan') === -1) {
+                return;
             }
+
+            debug('backlog page');
+
+            getIssuesFromBoard()
+                .then(response => {
+                    if (response && response.hasOwnProperty('issues')) {
+                        const issues = response.issues;
+
+                        debug('XMLHttpRequest has issues');
+                        debug(issues);
+
+                        for (const issue of issues) {
+                            try {
+                                createElementStatusAfterVisibleOnScreen(issue);
+                            } catch (error) {
+                                console.log(error.message);
+                            }
+                        }
+                    }
+                })
+                .catch(error => console.error(error));
+
         });
         send.apply(this, arguments);
     };
