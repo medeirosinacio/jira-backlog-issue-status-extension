@@ -1,0 +1,49 @@
+span.ghx-issue-status-extension {
+    -webkit-box-align: center;
+    align-items: center;
+    position: relative;
+    padding: 0 9px;
+    border: #EBECF0;
+    border-radius: 3px;
+    text-decoration: none;
+    margin-top: -1px;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-transform: uppercase;
+    background-color: #DFE1E6;
+    color: #2e2e2e;
+}
+
+span.ghx-issue-status-extension.yellow.light {
+    background-color: #DEEBFF;
+    color: #0747A6;
+}
+
+span.ghx-issue-status-extension.green.light {
+    background-color: #E3FCEF;
+    color: #006644;
+}
+
+span.ghx-issue-status-extension.blue-gray.light {
+    background-color: #DFE1E6;
+    color: #2e2e2e;
+}
+
+span.ghx-issue-status-extension.yellow.dark {
+    background-color: #082145;
+    color: #85B8FF;
+}
+
+span.ghx-issue-status-extension.green.dark {
+    background-color: #133527;
+    color: #7EE2B8;
+}
+
+span.ghx-issue-status-extension.blue-gray.dark {
+    background-color: #A1BDD914;
+    color: #C7D1DB;
+}

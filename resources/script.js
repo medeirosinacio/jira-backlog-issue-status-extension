@@ -10,7 +10,7 @@ function getRapidViewId() {
  * @param {string} message Mensagem que será logada.
  */
 function debug(message = '') {
-    console.log(message);
+    //  console.log(message);
 }
 
 /**
@@ -61,17 +61,40 @@ async function createElementStatusAfterVisibleOnScreen(issue) {
         debug(issue);
         const selector = `[data-issue-key="${issue.key}"] .ghx-row.ghx-end.ghx-items-container`;
         const element = await waitForElement(selector);
-        if (element.querySelector('.ghx-issue-status')) {
-            element.removeChild(element.querySelector('.ghx-issue-status'));
+        if (element.querySelector('.ghx-issue-status-extension')) {
+            element.removeChild(element.querySelector('.ghx-issue-status-extension'));
         }
         const statusElement = document.createElement('span');
-        statusElement.classList.add('ghx-issue-status');
+        statusElement.classList.add('ghx-issue-status-extension');
+        statusElement.classList.add(issue.status.statusCategory.colorName);
+        statusElement.classList.add(getSiteTheme());
         statusElement.textContent = issue.statusName;
         element.insertAdjacentElement('afterbegin', statusElement);
     } catch (error) {
         console.error(error);
     }
 }
+
+/**
+ * Obtem o tema do site
+ * @returns {null|string}
+ */
+function getSiteTheme() {
+    const htmlElement = document.querySelector('html');
+    const themeAttribute = htmlElement.getAttribute('data-theme');
+    const themes = themeAttribute.split(' ');
+    const colorMode = htmlElement.getAttribute('data-color-mode');
+
+    for (let i = 0; i < themes.length; i++) {
+        const [theme, value] = themes[i].split(':');
+        if (colorMode === value) {
+            return theme;
+        }
+    }
+
+    return null;
+}
+
 
 /**
  * Função que configura o XMLHttpRequest.

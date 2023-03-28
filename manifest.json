@@ -1,8 +1,16 @@
 {
   "manifest_version": 3,
-  "name": "Extension Name",
-  "description": "Some Desc.",
-  "version": "1.1",
+  "name": "Jira Board Backlog Status Enhancer",
+  "author": "Douglas Medeiros <eu@douglasmedeiros.dev>",
+  "description": "Adds color-coded status labels to issues on the Jira Board backlog page, improving workflow visualization for users.",
+  "version": "0.1",
+  "icons": {
+    "16": "logo/logo-16.png",
+    "48": "logo/logo-48.png",
+    "128": "logo/logo-128.png"
+  },
+  "permissions": [],
+  "host_permissions": [],
   "content_scripts": [
     {
       "matches": [
@@ -10,15 +18,15 @@
       ],
       "run_at": "document_start",
       "js": [
-        "contentscript.js",
-        "inject.js"
+        "resources/inject.js"
       ]
     }
   ],
   "web_accessible_resources": [
     {
       "resources": [
-        "injected.js"
+        "resources/script.js",
+        "resources/style.css"
       ],
       "matches": [
         "https://*.atlassian.net/*"
