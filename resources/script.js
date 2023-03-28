@@ -95,6 +95,16 @@ function getSiteTheme() {
     return null;
 }
 
+/**
+ *
+ * Valida se a pagina é do backlog
+ * @returns {boolean}
+ */
+function validaBackLogPage() {
+    const padrao = /^https:\/\/.*\.atlassian\.net\/jira\/software\/c\/projects\/.*\/boards\/.*\/backlog\?.*$/;
+    return padrao.test(window.location.href);
+}
+
 
 /**
  * Função que configura o XMLHttpRequest.
@@ -119,7 +129,13 @@ function getSiteTheme() {
             debug('XMLHttpRequest eventListener load');
             debug(self);
 
-            if (self.responseURL.indexOf('storeMode?mode=plan') === -1) {
+            if (
+                !validaBackLogPage() ||                                                           // no backlog page
+                (
+                    self.responseURL.indexOf('storeMode?mode=plan') === -1 &&                    // first access page
+                    !self.responseURL.indexOf('/rest/analytics/1.0/publish/bulk')               // edit issue
+                )
+            ) {
                 return;
             }
 
