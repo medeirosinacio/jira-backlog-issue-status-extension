@@ -8,7 +8,7 @@ managed by companies. This made it difficult to view the status of each issue on
 unorganized display of information. With this extension, the status of each issue is now displayed on the task board,
 resulting in a more organized and easily readable display of information.
 
-![Screenshot 2023-03-16 205709](https://user-images.githubusercontent.com/41749399/228263509-8e4a8014-11fc-4a4e-a33c-421b988cb086.jpg)
+![image](https://user-images.githubusercontent.com/41749399/228263782-aa0bed2d-d668-4789-91b2-9446396da5a6.png)
 
 
 ## Installation
