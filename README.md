@@ -8,12 +8,15 @@ managed by companies. This made it difficult to view the status of each issue on
 unorganized display of information. With this extension, the status of each issue is now displayed on the task board,
 resulting in a more organized and easily readable display of information.
 
+![image](https://user-images.githubusercontent.com/41749399/228263782-aa0bed2d-d668-4789-91b2-9446396da5a6.png)
+
+
 ## Installation
 
 The extension can be installed from the Chrome Store by navigating to the extension page and clicking the "Add to
 Chrome" button.
 
-[Chrome Web Store | Jira Board Backlog Status Enhancer](https://chrome.google.com/webstore/detail/)
+[Chrome Web Store | Jira Board Backlog Status Enhancer](https://chrome.google.com/webstore/detail/jira-board-backlog-status/hmhebmpaadglhidmcjlnanfkeklombkk/related)
 
 ## Usage
 
