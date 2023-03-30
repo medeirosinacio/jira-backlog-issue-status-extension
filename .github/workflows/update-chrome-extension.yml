@@ -4,7 +4,7 @@ run-name: Build & deploy chrome extension 🚀
 on:
   push:
     tags:
-      - v*.*.*
+      - v*
 
 jobs:
   update-chrome-extension:
