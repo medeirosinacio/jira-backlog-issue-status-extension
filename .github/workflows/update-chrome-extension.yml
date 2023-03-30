@@ -1,0 +1,30 @@
+name: Update Chrome Extension
+run-name: Build & deploy chrome extension 🚀
+
+on:
+  push:
+    tags:
+      - v*.*.*
+
+jobs:
+  update-chrome-extension:
+    name: Build and deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build
+        run: |
+          zip -r ${{ github.workspace }}/extension.zip ${{ github.workspace }}
+      - name: Generate extension hash
+        shell: bash
+        run:
+          sha256sum ${{ github.workspace }}/extension.zip
+      - name: Upload & Publish
+        uses: Passiverecords/chrome-extension-upload-action@1.4.1
+        with:
+          refresh-token: ${{ secrets.CHROME_REFRESH_TOKEN }}
+          client-id: ${{ secrets.CHROME_CLIENT_ID }}
+          client-secret: ${{ secrets.CHROME_CLIENT_SECRET }}
+          file-name: 'extension.zip'
+          app-id: ${{ secrets.CHROME_APP_ID }}
+          publish: true
