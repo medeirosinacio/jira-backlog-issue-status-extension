@@ -16,7 +16,7 @@ resulting in a more organized and easily readable display of information.
 The extension can be installed from the Chrome Store by navigating to the extension page and clicking the "Add to
 Chrome" button.
 
-[Chrome Web Store | Jira Board Backlog Status Enhancer](https://chrome.google.com/webstore/detail/jira-board-backlog-status/hmhebmpaadglhidmcjlnanfkeklombkk/related)
+[Chrome Web Store | Jira Board Backlog Status Enhancer](https://chrome.google.com/webstore/detail/jira-board-backlog-status/hmhebmpaadglhidmcjlnanfkeklombkk)
 
 ## Usage
 
