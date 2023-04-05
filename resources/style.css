@@ -47,3 +47,7 @@ span.ghx-issue-status-extension.blue-gray.dark {
     background-color: #A1BDD914;
     color: #C7D1DB;
 }
+
+.ghx-agile .aui-lozenge.ghx-label {
+    max-width: 100%;
+}
