@@ -3,7 +3,7 @@
   "name": "Jira Board Backlog Status Enhancer",
   "author": "Douglas Medeiros <eu@douglasmedeiros.dev>",
   "description": "Adds color-coded status labels to issues on the Jira Board backlog page, improving workflow visualization for users.",
-  "version": "0.2",
+  "version": "0.3",
   "icons": {
     "16": "logo/logo-16.png",
     "48": "logo/logo-48.png",
