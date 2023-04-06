@@ -48,6 +48,10 @@ span.ghx-issue-status-extension.blue-gray.dark {
     color: #C7D1DB;
 }
 
-.ghx-agile .aui-lozenge.ghx-label {
-    max-width: 100% !important;
+
+@media only screen and (min-width: 1250px) {
+    .ghx-agile .aui-lozenge.ghx-label {
+        max-width: 100% !important;
+    }
 }
+
