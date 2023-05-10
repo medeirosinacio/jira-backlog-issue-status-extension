@@ -82,9 +82,13 @@ async function createElementStatusAfterVisibleOnScreen(issue) {
 function getSiteTheme() {
     const htmlElement = document.querySelector('html');
     const themeAttribute = htmlElement.getAttribute('data-theme');
+
+    if(themeAttribute === null){
+        return 'light';
+    }
+
     const themes = themeAttribute.split(' ');
     const colorMode = htmlElement.getAttribute('data-color-mode');
-
     for (let i = 0; i < themes.length; i++) {
         const [theme, value] = themes[i].split(':');
         if (colorMode === value) {
